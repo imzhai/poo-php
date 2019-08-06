@@ -2,10 +2,9 @@
     
     class Magus extends Character
     {
-        // On surchage un attribut
-        protected $mana = 20;
         public function __construct($name)
         {
+            // On conserve le compoprtement du constructeur de la classe mère
             parent::__construct($name);
             this->mana *= 2;
         }

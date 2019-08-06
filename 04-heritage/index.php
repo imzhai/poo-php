@@ -42,7 +42,7 @@
         $aragorn->attack($legolas); // Enlève x point de vie en fonction de la force
         $legolas->rangedAttack($gandalf); // Elève x points de vie en fonction de la force * 3
         $gandalf->castSpell($aragorn); // Enlève x points de vie en fonction du mana
-       // $legolas->attack($gandalf);
+        $legolas->attack($gandalf);
 
        var_dump($game);
 

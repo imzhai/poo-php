@@ -12,7 +12,7 @@ class Character
         $this->name = $name;
     }
 
-    public function attack($character)
+    public function attack(Character $character)
     {
         // On va changer la vie du personnage attaqué
         $character->health -= $this->strenght;

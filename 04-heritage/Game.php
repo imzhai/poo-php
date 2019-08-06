@@ -16,7 +16,7 @@ class Game
      * @param [type] $player
      * @return void
      */
-    public function addPlayer($player)
+    public function addPlayer(Character $player)
     {   
         // array_push(this->players, $player);
         $this->players[] = $player;
