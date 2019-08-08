@@ -7,58 +7,51 @@
         - Apartir des données, créer instance de superHeroes et hydrater celle ci.-
         - Reprendre la requête SQL pour créer un super héros et on l'adapte pour pouvoir ajouter l'instance créée précédemment
 -->
-<?php 
+
+<?php include 'partials/header.php' ?>
 
 
-
-    $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
-
-    $name = new SuperHeroe();
-    $name->power = $power;
-    $name->identity = $identity;
-    $name->universe = $universe;
-    
-
-    if($_SERVER['REQUEST_METHOD'] === "POST")
-    {
-        // $_POST permet de récupérer les données du formulaire
-    $name = isset($_POST['name']) ? trim(htmlentities($_POST['name'])) : null;
-    $power = isset($_POST['power']) ? trim(htmlentities($_POST['power'])) : null;
-    $identity = isset($_POST['identity']) ? trim(htmlentities($_POST['identity'])) : null;
-    $universe = isset($_POST['universe']) ? trim(htmlentities($_POST['universe'])) : null;
-
-    
-
-    $sql = "INSERT INTO superheroe (name, power, identity, universe) VALUES (:name, :power, :identity, :universe)";
-    $query = $db->prepare($sql);
-
-    $query->bindParam(':name',$name);
-    $query->bindParam(':power',$power);
-    $query->bindParam(':identity',$identity);
-    $query->bindParam(':universe',$universe);
-
-    $query->execute();
-
-    }
-
- 
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-    <title>Document</title>
-</head>
-<body>
     <div class="container">
+    <?php 
+        // $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
+        //     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
+        var_dump($_SERVER['REQUEST_METHOD']);
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        { 
+            require_once 'SuperHeroe.php';
+            // $_POST permet de récupérer les données du formulaire
+            $superHeroe = new SuperHeroe();
+            $superHeroe->hydrate($_POST); // Hydrate l'objet avec les données du formulaire
+            // $superHeroe->name = isset($_POST['name']) ? trim(htmlentities($_POST['name'])) : null;
+            // $superHeroe->power = isset($_POST['power']) ? trim(htmlentities($_POST['power'])) : null;
+            // $superHeroe->identity = isset($_POST['identity']) ? trim(htmlentities($_POST['identity'])) : null;
+            // $superHeroe->universe = isset($_POST['universe']) ? trim(htmlentities($_POST['universe'])) : null;
+
+            // connexion PDO
+
+            // $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
+            //     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
+
+            // Vérification des données
+                // ...
+            // $superHeroe->save();
+            if ($superHeroe->save())
+            {
+                echo ' <div class="alert alert-success">Le héros a bien été ajouté</div>';
+            }   
+            
+            //Préparare la requête pour insérer le héros
+            // $sql = "INSERT INTO superheroe (name, power, identity, universe) VALUES (:name, :power, :identity, :universe)";
+            // $query = $db->prepare($sql);
+
+            // $query->bindValue(':name',$superHeroe->name);
+            // $query->bindValue(':power',$superHeroe->power);
+            // $query->bindValue(':identity',$superHeroe->identity);
+            // $query->bindValue(':universe',$superHeroe->universe);
+
+            // $query->execute();
+    }
+?>
         <form method="post">
             <div class="form-group">
                 <label for="name">Nom du Héro</label>
@@ -86,11 +79,5 @@
         </form>
     </div>
 
+<?php include 'partials/footer.php' ?>
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-</body>
-</html>
