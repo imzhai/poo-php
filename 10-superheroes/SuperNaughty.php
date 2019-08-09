@@ -59,6 +59,7 @@ class SuperNaughty
     {
         $query = Database::get()->prepare("DELETE FROM supernaughty WHERE id=:id");
         $query->bindValue(':id', $id, PDO::PARAM_INT);
+        
         return $query->execute();
 
     }
@@ -72,6 +73,7 @@ class SuperNaughty
         $query =  Database::get()->prepare($sql);
         $query->bindValue(':id', $id, PDO::PARAM_INT);
         $query->execute();
+
         return $query->fetch(PDO::FETCH_OBJ);
     }
 

@@ -1,7 +1,9 @@
 <?php
 
 require_once 'Database.php';
- include 'partials/header.php'; ?>
+ include 'partials/header.php'; 
+ require_once 'config/autoload.php';
+ ?>
 
 <?php
  

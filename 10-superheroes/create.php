@@ -9,7 +9,7 @@
 -->
 
 <?php 
-require_once 'config.autoload.php';
+require_once 'config/autoload.php';
 include 'partials/header.php' ;
 
 ?>
