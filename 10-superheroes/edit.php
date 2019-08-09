@@ -15,7 +15,7 @@
         $sql ="SELECT * FROM superheroe WHERE id=:id";
 
         $query = $db->prepare($sql);
-        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
 
         // Execution de la requete
         $query->execute();
@@ -25,7 +25,7 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === "POST")
-    {   // récupérer les données du fomulaire
+    {   // modifier les données du fomulaire
         $superHeroe = new SuperHeroe();
         $superHeroe->hydrate($_POST);
         // $name = isset($_POST['name']) ? trim(htmlentities($_POST['name'])) : null;

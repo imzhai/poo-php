@@ -15,7 +15,7 @@ include 'partials/header.php' ;
 ?>
 
 
-    <div class="container">
+    
     <?php 
         // $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
         //     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
@@ -56,6 +56,7 @@ include 'partials/header.php' ;
             // $query->execute();
     }
 ?>
+    <div class="container">
         <form method="post">
             <div class="form-group">
                 <label for="name">Nom du Héro</label>
