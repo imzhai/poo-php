@@ -37,7 +37,7 @@
             // $superHeroe->save();
             if ($superHeroe->save())
             {
-                echo ' <div class="alert alert-success">Le héros a bien été ajouté</div>';
+                echo ' <div class="alert alert-success">Le héros a bien été ajouté !</div>';
             }   
             
             //Préparare la requête pour insérer le héros

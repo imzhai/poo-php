@@ -9,16 +9,21 @@
 
  include 'partials/header.php' ?>
 <?php
+
+     
+
         // Récupère la base de données
         $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
 
         $sql = "SELECT id, name, power, identity, universe FROM superheroe ";
 
-        $response = $db->prepare($sql);
-        $response->execute();
+        $query = $db->prepare($sql);
+        $query->execute();
 
-        $superHeroes = $response->fetchAll(PDO::FETCH_OBJ);
+        $superHeroes = $query->fetchAll(PDO::FETCH_OBJ);
+
+    
 
 ?>
 
@@ -33,7 +38,7 @@
                 <th scope="col">Pouvoir</th>
                 <th scope="col">Identité</th>
                 <th scope="col">Univers</th>
-                <th scope="col" class="">Actions</th>
+                <th scope="col" class=" ml-0">Actions</th>
                 
             </tr>
         </thead>
@@ -47,9 +52,9 @@
                     <td><?= $superHeroe->identity ?></td>
                     <td><?= $superHeroe->universe ?></td>  
                     <td>
-                        <button class="btn btn-secondary rounded center">Révéler</button>
-                        <button class="btn btn-primary rounded  center">Modifier</button>   
-                        <button class="btn btn-danger rounded center">Révéler</button>                       
+                        <a class="btn btn-secondary rounded center" href=""> Révéler</a>
+                        <a class="btn btn-primary rounded center" href="./edit.php?id=<?= $superHeroe->id ?>">Modifier</a>   
+                        <a class="btn btn-danger rounded center" href="./delete.php?id=<?= $superHeroe->id ?>">supprimer</a>                       
 
                     </td>               
 
