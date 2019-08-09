@@ -1,48 +1,59 @@
 <?php
+ require_once 'config/autoload.php';
+
  include 'partials/header.php'; 
 
- $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
+    $db = Database::get();
 
     // Récupération de l'ID
     $id = isset($_GET['id']) ? trim($_GET['id']) : null;
 
-if($_SERVER['REQUEST_METHOD'] === "POST")
-{
-   $name = isset($_POST['name']) ? trim(htmlentities($_POST['name'])) : null;
-   $power = isset($_POST['power']) ? trim(htmlentities($_POST['power'])) : null;
-   $identity = isset($_POST['identity']) ? trim(htmlentities($_POST['identity'])) : null;
-   $universe = isset($_POST['universe']) ? trim(htmlentities($_POST['universe'])) : null;
 
-   $sql = "UPDATE superheroe SET `name`=:name, `power`=:power, `identity`=:identity, `universe`=:universe WHERE `id`=:id ";
-   $query = $db->prepare($sql);
+ // Récupération des données de l'id selectionné dans le formulaire
+    if(ctype_digit($id))
+    {
+        $sql ="SELECT * FROM superheroe WHERE id=:id";
 
-   $query->bindValue(':name',$name);
-   $query->bindValue(':power',$power);
-   $query->bindValue(':identity',$identity);
-   $query->bindValue(':universe',$universe);
-   $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query = $db->prepare($sql);
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
 
-   $query->execute();
+        // Execution de la requete
+        $query->execute();
 
-   header("location: list.php");
-   exit;
-}
+        $superHeroe = $query->fetch(PDO::FETCH_OBJ);
 
-if(ctype_digit($id))
-{
-    $sql ="SELECT * FROM superheroe WHERE id=:id";
+    }
 
-    $query = $db->prepare($sql);
-    $query->bindParam(':id', $id, PDO::PARAM_INT);
+    if($_SERVER['REQUEST_METHOD'] === "POST")
+    {   // récupérer les données du fomulaire
+        $superHeroe = new SuperHeroe();
+        $superHeroe->hydrate($_POST);
+        // $name = isset($_POST['name']) ? trim(htmlentities($_POST['name'])) : null;
+        // $power = isset($_POST['power']) ? trim(htmlentities($_POST['power'])) : null;
+        // $identity = isset($_POST['identity']) ? trim(htmlentities($_POST['identity'])) : null;
+        // $universe = isset($_POST['universe']) ? trim(htmlentities($_POST['universe'])) : null;
 
-    // Execution de la requete
-    $query->execute();
+        // On fait la requête SQL et on vérifie en même temps si elle a réussi pour afficher un message
+        // cela va remplacer la requête SQL
+        if ($superHeroe->update($id))
+        {
+            echo '<div class="alert alert-succes">Le héro a bien été modifié</div>';
+        }
+        // $sql = "UPDATE superheroe SET `name`=:name, `power`=:power, `identity`=:identity, `universe`=:universe WHERE `id`=:id ";
+        // $query = $db->prepare($sql);
+        // $query->bindValue(':name',$name);
+        // $query->bindValue(':power',$power);
+        // $query->bindValue(':identity',$identity);
+        // $query->bindValue(':universe',$universe);
+        // $query->bindValue(':id', $id, PDO::PARAM_INT);
+        // $query->execute();
 
-    $superHeroe = $query->fetch(PDO::FETCH_OBJ);
+        header("location: list.php");
+        exit;
+    }
 
-}
 
+// Le value dans le formulaire va servir à pré-remplir les champs avec ce qui a déjà été notifié auparavent 
 
 
 ?>
@@ -67,8 +78,8 @@ if(ctype_digit($id))
             <div class="form-group">
                 <label for="universe">Pouvoir du Héro</label>
                 <select class="form-control" name="universe" id="universe">
-                    <option value="Marvel">Marvel</option>
-                    <option value="DC">DC</option>
+                    <option value="Marvel" <?= ($superHeroe->universe === 'Marvel') ? 'selected' : '';?>>Marvel</option>
+                    <option value="DC" <?= ($superHeroe->universe === 'DC') ? 'selected' : '';?> >DC</option>
                 </select>
             </div>
 

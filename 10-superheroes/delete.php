@@ -4,15 +4,14 @@
     // Récupère la base de données / connexion avec PDO
         // $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
         //     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
-    require_once 'Database.php'
+    require_once 'config/autoload.php';
 
    $db = Database::get();
-   
+
 
 
     // Récupération de l'ID
     $id = isset($_GET['id']) ? trim($_GET['id']) : null;
-
 
 
     // Le select sert uniquement à faire une confirmation en mettant le nom du héro sélectionné dedans
@@ -30,9 +29,7 @@
             header("location: list.php");
         }
 
-        $name = $superHeroe->name;
-
-        
+        $name = $superHeroe->name;  
     }
 
        // Suppression du Héro puis redirection

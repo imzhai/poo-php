@@ -50,7 +50,6 @@ class SuperHeroe
        $this->power = isset($data['power']) ? trim(htmlentities($data['power'])) : null;
        $this->identity = isset($data['identity']) ? trim(htmlentities($data['identity'])) : null;
        $this->universe = isset($data['universe']) ? trim(htmlentities($data['universe'])) : null;
-
     }
 
     /**
@@ -59,23 +58,35 @@ class SuperHeroe
 
     public function save()
     {
-              // connexion PDO
-              $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
-            
-            //Préparare la requête pour insérer le héros
-            $sql = "INSERT INTO superheroe (name, power, identity, universe) VALUES (:name, :power, :identity, :universe)";
-            $query = $db->prepare($sql);
-            // associe les données récupérées à la requête
-            $query->bindValue(':name',$this->name);
-            $query->bindValue(':power',$this->power);
-            $query->bindValue(':identity',$this->identity);
-            $query->bindValue(':universe',$this->universe);
-    
-            return $query->execute(); // Execute la requête préparée et renvoie un booleen
+            // connexion PDO
+        //Préparare la requête pour insérer le héros
+        $sql = "INSERT INTO superheroe (name, power, identity, universe) VALUES (:name, :power, :identity, :universe)";
+        $query = Database::get()->prepare($sql);
+        // associe les données récupérées à la requête
+        $query->bindValue(':name',$this->name);
+        $query->bindValue(':power',$this->power);
+        $query->bindValue(':identity',$this->identity);
+        $query->bindValue(':universe',$this->universe);
 
-            
-    
-        
+        return $query->execute(); // Execute la requête préparée et renvoie un booleen
+    }
+
+        /**
+     * Permet de modifier le héros en base de données
+     */
+
+    public function update($id)
+    {
+        //Prépare la requête pour modifier le héros
+        $sql = "UPDATE superheroe SET `name`=:name, `power`=:power, `identity`=:identity, `universe`=:universe WHERE `id`=:id ";
+        $query = Database::get()->prepare($sql);
+
+        $query->bindValue(':name',$this->name);
+        $query->bindValue(':power',$this->power);
+        $query->bindValue(':identity',$this->identity);
+        $query->bindValue(':universe',$this->universe);
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
+
+         return $query->execute();
     }
 }

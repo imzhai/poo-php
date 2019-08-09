@@ -6,18 +6,20 @@
  * Créer tableau HTML avec bootstrap.
  * Afficher liste des superhéros présents dans la bdd
  */
-
+require_once 'Database.php';
  include 'partials/header.php' ?>
 <?php
-
+   $db = Database::get();
      
 
         // Récupère la base de données
-        $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
+        // $db = new PDO('mysql:host=localhost;dbname=wf3_superheroes;charset=utf8', 'root', '', [
+        //     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ]); // Activer les erreurs MySQL
+
 
         $sql = "SELECT id, name, power, identity, universe FROM superheroe ";
 
+            // Database remplce la connexion PDO
         $query = $db->prepare($sql);
         $query->execute();
 

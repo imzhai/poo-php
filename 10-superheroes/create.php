@@ -8,7 +8,11 @@
         - Reprendre la requête SQL pour créer un super héros et on l'adapte pour pouvoir ajouter l'instance créée précédemment
 -->
 
-<?php include 'partials/header.php' ?>
+<?php 
+require_once 'config.autoload.php';
+include 'partials/header.php' ;
+
+?>
 
 
     <div class="container">
@@ -18,7 +22,7 @@
         var_dump($_SERVER['REQUEST_METHOD']);
         if($_SERVER['REQUEST_METHOD'] === "POST")
         { 
-            require_once 'SuperHeroe.php';
+         
             // $_POST permet de récupérer les données du formulaire
             $superHeroe = new SuperHeroe();
             $superHeroe->hydrate($_POST); // Hydrate l'objet avec les données du formulaire
